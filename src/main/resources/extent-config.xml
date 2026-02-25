@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extentreports>
+  <configuration>
+    <reportName>Automation Test Report</reportName>
+    <documentTitle>Execution Results</documentTitle>
+    <theme>STANDARD</theme>
+    <timeStampFormat>yyyy-MM-dd HH:mm:ss</timeStampFormat>
+  </configuration>
+</extentreports>

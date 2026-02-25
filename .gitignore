@@ -1,0 +1,23 @@
+# Maven
+target/
+
+# Compiled class files
+*.class
+
+# Logs
+*.log
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Selenium screenshots (optional if you generate them)
+screenshots/
+
+# Test reports
+test-output/
+extent-reports/
