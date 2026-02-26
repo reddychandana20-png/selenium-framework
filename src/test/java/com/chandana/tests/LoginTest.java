@@ -1,17 +1,16 @@
 package com.chandana.tests;
 
 
-import com.chandana.framework.base.BaseTest;
-
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.Assert;
 
 import com.chandana.Action.LoginAction;
+import com.chandana.framework.base.BaseTest;
 
 public class LoginTest extends BaseTest{
      private LoginAction loginAction;
-
+//summary for 
     @BeforeMethod(alwaysRun = true)
     
     public void setUp(){
@@ -19,25 +18,25 @@ public class LoginTest extends BaseTest{
          loginAction = new LoginAction(driver());
     }
 
-    @Test
+    @Test (groups = {"smoke"})
     public void SignIn() {
         loginAction.clickSignIn();
         // Add assertions in test layer, using TestNG asserts as needed
-         Assert.assertEquals(driver().getTitle(), "Sign In to Your Account");
+         Assert.assertEquals(driver().getTitle(), "Sign into your Account");
     }
     
-    @Test
+    @Test 
     public void DashboardVerification(){
         loginAction.clickSignIn();
         // Add assertions in test layer, using TestNG asserts as needed
-         Assert.assertEquals(driver().getTitle(), "Sign In to Your Account");
+         Assert.assertEquals(driver().getTitle(), "Sign into your Account");
     }
 
-     @Test
+     @Test(groups = {"regression"})
     public void NotificationVerification(){
         loginAction.clickSignIn();
         // Add assertions in test layer, using TestNG asserts as needed
-         Assert.assertEquals(driver().getTitle(), "Sign In  to Your Account");
+         Assert.assertEquals(driver().getTitle(), "Sign into your Account");
     }
 
 }
