@@ -19,7 +19,7 @@ public class LoginTest extends BaseTest{
          loginAction = new LoginAction(driver());
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void SignIn() {
         loginAction.clickSignIn();
         // Add assertions in test layer, using TestNG asserts as needed
