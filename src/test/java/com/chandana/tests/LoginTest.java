@@ -33,7 +33,7 @@ public class LoginTest extends BaseTest{
          Assert.assertEquals(driver().getTitle(), "Sign In to Your Account");
     }
 
-     @Test
+     @Test(groups = {"Regression"})
     public void NotificationVerification(){
         loginAction.clickSignIn();
         // Add assertions in test layer, using TestNG asserts as needed
