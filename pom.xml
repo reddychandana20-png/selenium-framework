@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.chandana</groupId>
@@ -15,6 +16,11 @@
     <selenium.version>4.21.0</selenium.version>
     <testng.version>7.10.2</testng.version>
     <webdrivermanager.version>5.9.2</webdrivermanager.version>
+
+    <!-- defaults (so mvn clean test works even if you don't pass -D...) -->
+    <browser>chrome</browser>
+    <url>https://www.viabenefits.com</url>
+    <groups></groups> <!-- empty means "run all" -->
   </properties>
 
   <dependencies>
@@ -27,12 +33,13 @@
 
     <!-- TestNG -->
     <dependency>
-  <groupId>org.testng</groupId>
-  <artifactId>testng</artifactId>
-  <version>7.10.2</version>
-</dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
+      <scope>test</scope>
+    </dependency>
 
-    <!-- WebDriverManager (auto driver binaries) -->
+    <!-- WebDriverManager -->
     <dependency>
       <groupId>io.github.bonigarcia</groupId>
       <artifactId>webdrivermanager</artifactId>
@@ -51,49 +58,52 @@
       <groupId>com.aventstack</groupId>
       <artifactId>extentreports-testng-adapter</artifactId>
       <version>1.2.2</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Run TestNG -->
+
+      <!-- Surefire: TestNG + groups + pass -D values into System.getProperty -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
         <configuration>
+
+          <!-- OPTIONAL: if you use testng.xml, keep this.
+               If you want to run only by groups and NOT rely on xml, you can remove suiteXmlFiles. -->
           <suiteXmlFiles>
             <suiteXmlFile>testng.xml</suiteXmlFile>
           </suiteXmlFiles>
+
+          <!-- Run specific TestNG groups like -Dgroups=smoke -->
+          <groups>${groups}</groups>
+
+          <!-- Pass Jenkins/Maven params to your framework -->
+          <systemPropertyVariables>
+            <browser>${browser}</browser>
+            <url>${url}</url>
+          </systemPropertyVariables>
+
           <testFailureIgnore>false</testFailureIgnore>
         </configuration>
       </plugin>
 
-      <!-- Exec Maven Plugin for running TestRunner -->
+      <!-- (Optional) Exec plugin only if you really run a main() TestRunner.
+           If you run TestNG via surefire, you typically DO NOT need this. -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
           <mainClass>com.chandana.framework.listeners.TestRunner</mainClass>
-             <classpathScope>test</classpathScope>
+          <classpathScope>test</classpathScope>
         </configuration>
       </plugin>
-    </plugins>
 
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.2.5</version>
-            <configuration>
-                <groups>${groups}</groups>
-                <systemPropertyVariables>
-                    <browser>${browser}</browser>
-                    <url>${url}</url>
-                </systemPropertyVariables>
-            </configuration>
-        </plugin>
     </plugins>
   </build>
+
 </project>
