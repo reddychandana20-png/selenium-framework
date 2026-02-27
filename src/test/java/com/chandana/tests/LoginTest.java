@@ -20,23 +20,23 @@ public class LoginTest extends BaseTest{
 
     @Test (groups = {"smoke"})
     public void SignIn() {
-        loginAction.clickSignIn();
+        loginAction.clickSignIn().click();
         // Add assertions in test layer, using TestNG asserts as needed
-         Assert.assertEquals(driver().getTitle(), "Sign into your Account");
+         Assert.assertEquals(driver().getTitle(), "Via Benefits | Sign In");
     }
     
     @Test 
     public void DashboardVerification(){
-        loginAction.clickSignIn();
+        loginAction.clickSignIn().click();
         // Add assertions in test layer, using TestNG asserts as needed
-         Assert.assertEquals(driver().getTitle(), "Sign into your Account");
+         Assert.assertEquals(driver().getTitle(), "Via Benefits | Sign In");
     }
 
      @Test(groups = {"regression"})
     public void NotificationVerification(){
-        loginAction.clickSignIn();
+        loginAction.clickSignIn().click();
         // Add assertions in test layer, using TestNG asserts as needed
-         Assert.assertEquals(driver().getTitle(), "Sign into your Account");
+         Assert.assertEquals(driver().getTitle(), "Via Benefits | Sign In");
     }
 
 }
