@@ -1,4 +1,4 @@
-package com.chandana.Action;
+package com.chandana.action;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
