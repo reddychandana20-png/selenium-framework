@@ -5,7 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.chandana.Action.LoginAction;
+import com.chandana.action.LoginAction;
 import com.chandana.framework.base.BaseTest;
 
 public class LoginTest extends BaseTest{
