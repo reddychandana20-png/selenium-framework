@@ -1,0 +1,47 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  BROWSER: 'chrome'
+  GROUPS: 'smoke'          # example: smoke or regression (blank = run all)
+  THREADS: '3'
+
+steps:
+  - checkout: self
+
+  # Install Java 17
+  - task: UseJavaVersion@1
+    inputs:
+      versionSpec: '17'
+      architecture: 'x64'
+
+  # Run Maven tests
+  - task: Maven@4
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'clean test'
+      options: >
+        -Dbrowser=$(BROWSER)
+        -Dgroups=$(GROUPS)
+        -Dthreads=$(THREADS)
+      publishJUnitResults: false
+
+  # Publish surefire XML results to ADO "Tests" tab
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/target/surefire-reports/*.xml'
+      failTaskOnFailedTests: true
+      testRunTitle: 'Selenium TestNG Results'
+    condition: succeededOrFailed()
+
+  # Publish reports (Extent, screenshots, logs) as Artifact (change path)
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(System.DefaultWorkingDirectory)/test-output'  # update if your report folder differs
+      artifact: 'automation-reports'
+      publishLocation: 'pipeline'
+    condition: always()
