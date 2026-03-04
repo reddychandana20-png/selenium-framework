@@ -6,17 +6,18 @@ pool:
 
 variables:
   BROWSER: 'chrome'
-  GROUPS: 'smoke'          # example: smoke or regression (blank = run all)
+  GROUPS: 'smoke'   # blank = run all
   THREADS: '3'
 
 steps:
   - checkout: self
 
-  # Install Java 17
-  - task: UseJavaVersion@1
+  # Set Java version
+  - task: JavaToolInstaller@0
     inputs:
-      versionSpec: '17'
-      architecture: 'x64'
+      versionSpec: '17'              # change to '25' only if your agent supports it
+      jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'
 
   # Run Maven tests
   - task: Maven@4
@@ -29,7 +30,7 @@ steps:
         -Dthreads=$(THREADS)
       publishJUnitResults: false
 
-  # Publish surefire XML results to ADO "Tests" tab
+  # Publish TestNG/Surefire XML results to ADO "Tests" tab
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'JUnit'
@@ -38,10 +39,10 @@ steps:
       testRunTitle: 'Selenium TestNG Results'
     condition: succeededOrFailed()
 
-  # Publish reports (Extent, screenshots, logs) as Artifact (change path)
+  # Publish reports (Extent, screenshots, logs) as Artifact
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(System.DefaultWorkingDirectory)/test-output'  # update if your report folder differs
+      targetPath: '$(System.DefaultWorkingDirectory)/test-output'  # change to your real report folder
       artifact: 'automation-reports'
       publishLocation: 'pipeline'
     condition: always()
