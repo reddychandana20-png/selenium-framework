@@ -7,7 +7,7 @@ pool:
 variables:
   BROWSER: 'chrome'
   GROUPS: 'smoke'   # blank = run all
-  THREADS: '3'
+  THREADS: '1'
 
 steps:
   - checkout: self
