@@ -1,9 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="SeleniumTestSuite" parallel="methods" thread-count="3">
-    <test name="TestSuite">
-        <classes>
-            <class name="com.chandana.tests.LoginTest"/>
-            <!-- Add more test classes here -->
-        </classes>
-    </test>
-</suite>

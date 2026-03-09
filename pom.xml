@@ -16,11 +16,19 @@
     <selenium.version>4.21.0</selenium.version>
     <testng.version>7.10.2</testng.version>
     <webdrivermanager.version>5.9.2</webdrivermanager.version>
+    <extentreports.version>5.0.9</extentreports.version>
+    <extentreports.adapter.version>1.2.2</extentreports.adapter.version>
 
-    <!-- defaults (so mvn clean test works even if you don't pass -D...) -->
+    <!-- Defaults (override via -D...) -->
     <browser>chrome</browser>
     <url>https://www.viabenefits.com</url>
-    <groups></groups> <!-- empty means "run all" -->
+
+    <!-- Parallel defaults (override via -Dparallel / -Dthreads) -->
+    <parallel>methods</parallel>
+    <threads>3</threads>
+
+    <!-- Groups default (blank = run all; override via -Dgroups=smoke) -->
+    <groups></groups>
   </properties>
 
   <dependencies>
@@ -49,56 +57,67 @@
     <dependency>
       <groupId>com.aventstack</groupId>
       <artifactId>extentreports</artifactId>
-      <version>5.0.9</version>
+      <version>${extentreports.version}</version>
     </dependency>
 
     <!-- ExtentReports TestNG Adapter -->
     <dependency>
       <groupId>com.aventstack</groupId>
       <artifactId>extentreports-testng-adapter</artifactId>
-      <version>1.2.2</version>
+      <version>${extentreports.adapter.version}</version>
       <scope>test</scope>
     </dependency>
+     <!-- RestAssured -->
+    <dependency>
+    <groupId>io.rest-assured</groupId>
+    <artifactId>rest-assured</artifactId>
+    <version>5.4.0</version>
+     <scope>test</scope>
+</dependency>
+
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.17.1</version>
+</dependency>
+
   </dependencies>
 
   <build>
     <plugins>
 
-      <!-- Surefire: TestNG + groups + pass -D values into System.getProperty -->
+      <!-- Surefire runs TestNG tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
         <configuration>
 
-          <!-- OPTIONAL: if you use testng.xml, keep this.
-               If you want to run only by groups and NOT rely on xml, you can remove suiteXmlFiles. -->
-          <suiteXmlFiles>
-            <suiteXmlFile>testng.xml</suiteXmlFile>
-          </suiteXmlFiles>
+          <!-- Make sure Surefire uses TestNG -->
+          <testNGArtifactName>org.testng:testng</testNGArtifactName>
 
-          <!-- Run specific TestNG groups like -Dgroups=smoke -->
+          <!-- Auto-discover tests (no testng.xml needed) -->
+          <includes>
+            <include>**/*Test.java</include>
+            <include>**/*Tests.java</include>
+            <include>**/*TestCase.java</include>
+          </includes>
+
+          <!-- Run specific TestNG groups: -Dgroups=smoke -->
+          <!-- If groups is blank, it runs all tests -->
           <groups>${groups}</groups>
 
-          <!-- Pass Jenkins/Maven params to your framework -->
+          <!-- Parallel execution -->
+          <parallel>${parallel}</parallel>
+          <threadCount>${threads}</threadCount>
+
+          <!-- Pass Maven/Jenkins params to System.getProperty() -->
           <systemPropertyVariables>
             <browser>${browser}</browser>
             <url>${url}</url>
           </systemPropertyVariables>
 
           <testFailureIgnore>false</testFailureIgnore>
-        </configuration>
-      </plugin>
-
-      <!-- (Optional) Exec plugin only if you really run a main() TestRunner.
-           If you run TestNG via surefire, you typically DO NOT need this. -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
-        <configuration>
-          <mainClass>com.chandana.framework.listeners.TestRunner</mainClass>
-          <classpathScope>test</classpathScope>
         </configuration>
       </plugin>
 
