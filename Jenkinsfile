@@ -11,7 +11,7 @@ pipeline {
     choice(name: 'BROWSER', choices: ['chrome','edge'], description: 'Browser')
     booleanParam(name: 'HEADLESS', defaultValue: true, description: 'Headless mode')
     // Optional: let user pick, but we will enforce rules based on ENV
-    choice(name: 'SUITE', choices: ['auto','smoke','regression'], description: 'auto = enforce by ENV')
+    choice(name: 'SUITE', choices: ['auto','smoke','regression','api'], description: 'auto = enforce by ENV')
   }
 
   options { timestamps() }
