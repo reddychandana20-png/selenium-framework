@@ -2,7 +2,9 @@ package com.chandana.tests.api.dto;
 import com.chandana.tests.api.dto.UserDataDTO;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserResponseDTO {
 
     private int page;
