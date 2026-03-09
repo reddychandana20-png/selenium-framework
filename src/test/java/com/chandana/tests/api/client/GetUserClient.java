@@ -11,7 +11,8 @@ public class GetUserClient {
 
     Response response = given()
             .header(ApiConstants.API_KEY_HEADER, ApiConstants.API_KEY_VALUE)
-            .contentType(ContentType.JSON)
+             .accept(ContentType.JSON)
+             .contentType(ContentType.JSON)
             .when()
             .get(ApiConstants.USERS_ENDPOINT);
 
