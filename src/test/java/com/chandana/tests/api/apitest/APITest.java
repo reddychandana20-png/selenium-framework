@@ -1,7 +1,6 @@
 package com.chandana.tests.api.apitest;
 import com.chandana.tests.api.client.GetUserClient;
-import com.chandana.tests.api.dto.UserResponseDTO;
-import com.chandana.tests.api.dto.UserDataDTO;
+import com.chandana.tests.api.dto.IssueTypeDTO;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,37 +12,24 @@ public class APITest extends BaseTestAPI {
 
     @Test
     public void verifyGetUsersResponseBody() {
+    // Call API from client layer
+    IssueTypeDTO[] issueTypes = userClient.getIssueTypes();
 
-        // Call API from client layer
-       UserResponseDTO response = userClient.getUsers();
+    // Validate the response is not null and not empty
+    Assert.assertNotNull(issueTypes, "Issue types array should not be null");
+    Assert.assertTrue(issueTypes.length > 0, "Issue types array should not be empty");
 
-        // Validate top level fields
-       // Assert.assertEquals(response.getResponse().getStatusCode(), 200, "Status code mismatch");
-        Assert.assertEquals(response.getPage(), 1, "Page number mismatch");
-       /* Assert.assertTrue(response.getBody().getper > 0, "Per page value should be greater than zero");
-        Assert.assertTrue(response.getBody().getTotal() > 0, "Total users should be greater than zero");
-        Assert.assertTrue(response.getBody().getTotal_pages() > 0, "Total pages should be greater than zero"); 
-
-        // Validate user list
-       
-        List<UserDataDTO> users = response.getBody().getData();
-
-        Assert.assertNotNull(users, "User list should not be null");
-        Assert.assertFalse(users.isEmpty(), "User list should not be empty");
-
-        // Validate first user details
-        UserDataDTO firstUser = users.get(0);
-
-        Assert.assertTrue(firstUser.getId() > 0, "User ID should be greater than zero");
-        Assert.assertNotNull(firstUser.getEmail(), "User email should not be null");
-        Assert.assertTrue(firstUser.getEmail().contains("@"), "Invalid email format");
-        Assert.assertNotNull(firstUser.getFirst_name(), "First name should not be null");
-        Assert.assertNotNull(firstUser.getLast_name(), "Last name should not be null");
-
-        // Validate expected user exists
-        boolean expectedUserFound = users.stream()
-                .anyMatch(user -> "michael.lawson@reqres.in".equalsIgnoreCase(user.getEmail()));
-
-        Assert.assertTrue(expectedUserFound, "Expected user email not found in response"); */
+    // Validate first issue type fields (basic check)
+    IssueTypeDTO firstType = issueTypes[0];
+    Assert.assertNotNull(firstType.getId(), "Issue type ID should not be null");
+    Assert.assertNotNull(firstType.getName(), "Issue type name should not be null");
+    Assert.assertNotNull(firstType.getDescription(), "Issue type description should not be null");
+    // Optionally print for debug
+    System.out.println("First Issue Type: " + firstType.getName());
+    // Assert.assertNotNull(firstUser.getLast_name(), "Last name should not be null");
+    // Validate expected user exists
+    // boolean expectedUserFound = users.stream()
+    //         .anyMatch(user -> "michael.lawson@reqres.in".equalsIgnoreCase(user.getEmail()));
+    // Assert.assertTrue(expectedUserFound, "Expected user email not found in response");
     }
 }

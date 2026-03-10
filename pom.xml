@@ -111,11 +111,11 @@
           <parallel>${parallel}</parallel>
           <threadCount>${threads}</threadCount>
 
-          <!-- Pass Maven/Jenkins params to System.getProperty() -->
           <systemPropertyVariables>
-            <browser>${browser}</browser>
-            <url>${url}</url>
-          </systemPropertyVariables>
+    <browser>${browser}</browser>
+    <baseUrl>${baseUrl}</baseUrl>
+    <apiBaseUrl>${apiBaseUrl}</apiBaseUrl>
+</systemPropertyVariables>
 
           <testFailureIgnore>false</testFailureIgnore>
         </configuration>
