@@ -62,11 +62,15 @@ public class ConfigReader {
         }
     }
  
-    public static String getTestUsername() {
-        return get("testUsername", "");
+    public static String getUsername() {
+        return get("username", "");
     }
- 
-    public static String getTestPassword() {
-        return get("testPassword", "");
+
+    public static String getPassword() {
+        return get("password", "");
+    }
+
+    public static String getApiKey() {
+        return get("api_key", "");
     }
 }
