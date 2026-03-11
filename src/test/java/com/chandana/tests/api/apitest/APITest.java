@@ -1,4 +1,5 @@
 package com.chandana.tests.api.apitest;
+import com.chandana.framework.annotations.JiraTestCase;
 import com.chandana.tests.api.client.GetUserClient;
 import com.chandana.tests.api.dto.IssueTypeDTO;
 import org.testng.Assert;
@@ -11,6 +12,7 @@ public class APITest extends BaseTestAPI {
     private final GetUserClient userClient = new GetUserClient();
 
     @Test
+    @JiraTestCase(id = "TEST-1", summary = "Verify API returns valid response for project endpoint")
     public void verifyGetUsersResponseBody() {
         // Call API from client layer with desired endpoint
         String endpoint = "/rest/api/3/project";

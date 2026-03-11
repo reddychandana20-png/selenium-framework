@@ -73,4 +73,16 @@ public class ConfigReader {
     public static String getApiKey() {
         return get("api_key", "");
     }
+
+    public static boolean isJiraUpdateEnabled() {
+        return Boolean.parseBoolean(get("jira.update.enabled", "false"));
+    }
+
+    public static String getJiraIssueKey() {
+        return get("jira.issue.key", "");
+    }
+
+    public static String getJiraCustomFieldId() {
+        return get("jira.custom.field.id", "customfield_10000");
+    }
 }
