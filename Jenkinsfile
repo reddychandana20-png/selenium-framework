@@ -61,6 +61,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         script {
+            /*
           // Map ENV -> Jenkins credential ID
           def credId = (params.ENV == 'dev') ? 'db-dev' :
                        (params.ENV == 'test') ? 'db-test' :
@@ -71,7 +72,7 @@ pipeline {
                                             passwordVariable: 'DB_PASS')]) {
 
             def mvnCmd = "mvn -B test -Denv=${params.ENV} -Dgroups=${env.GROUPS} -Dbrowser=${params.BROWSER} -Dheadless=${params.HEADLESS} -Ddb.user=%DB_USER% -Ddb.pass=%DB_PASS%"
-
+             */
             if (isUnix()) {
               // On Linux/Mac, env vars are $DB_USER / $DB_PASS
               sh "mvn -B test -Denv=${params.ENV} -Dgroups=${env.GROUPS} -Dbrowser=${params.BROWSER} -Dheadless=${params.HEADLESS} -Ddb.user=$DB_USER -Ddb.pass=$DB_PASS"
