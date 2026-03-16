@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Selenium Test Suite" parallel="tests" thread-count="4" verbose="2">
+
+    <!-- API Tests Group -->
+    <test name="API Tests" enabled="true">
+        <groups>
+            <run>
+                <include name="api"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.chandana.tests.api.apitest.APITest"/>
+        </classes>
+    </test>
+
+    <!-- UI Tests Group (for future use) -->
+    <test name="UI Tests" enabled="false">
+        <groups>
+            <run>
+                <include name="ui"/>
+            </run>
+        </groups>
+        <classes>
+            <!-- Add UI test classes here -->
+        </classes>
+    </test>
+
+    <!-- Integration Tests Group (for future use) -->
+    <test name="Integration Tests" enabled="false">
+        <groups>
+            <run>
+                <include name="integration"/>
+            </run>
+        </groups>
+        <classes>
+            <!-- Add integration test classes here -->
+        </classes>
+    </test>
+
+</suite>

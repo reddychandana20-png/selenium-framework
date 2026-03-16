@@ -6,12 +6,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
-@Test (groups = {"api"})
+@Test 
 public class APITest extends BaseTestAPI {
 
     private final GetUserClient userClient = new GetUserClient();
 
-    @Test
+    @Test(groups = {"api"})
     @JiraTestCase(id = "TEST-1", summary = "Verify API returns valid response for project endpoint")
     public void verifyGetUsersResponseBody() {
         // Call API from client layer with desired endpoint

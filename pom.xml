@@ -97,26 +97,31 @@
           <!-- Make sure Surefire uses TestNG -->
           <testNGArtifactName>org.testng:testng</testNGArtifactName>
 
-          <!-- Auto-discover tests (no testng.xml needed) -->
+          <!-- Use testng.xml for test execution -->
+          <suiteXmlFiles>
+            <suiteXmlFile>src/main/resources/testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
+
+          <!-- Auto-discover tests if testng.xml is not used -->
           <includes>
             <include>**/*Test.java</include>
             <include>**/*Tests.java</include>
             <include>**/*TestCase.java</include>
           </includes>
 
-          <!-- Run specific TestNG groups: -Dgroups=smoke -->
+          <!-- Run specific TestNG groups: -Dgroups=api -->
           <!-- If groups is blank, it runs all tests -->
           <groups>${groups}</groups>
 
-          <!-- Parallel execution -->
+          <!-- Parallel execution: -Dparallel=methods -Dthreads=4 -->
           <parallel>${parallel}</parallel>
           <threadCount>${threads}</threadCount>
 
           <systemPropertyVariables>
-    <browser>${browser}</browser>
-    <baseUrl>${baseUrl}</baseUrl>
-    <apiBaseUrl>${apiBaseUrl}</apiBaseUrl>
-</systemPropertyVariables>
+            <browser>${browser}</browser>
+            <baseUrl>${baseUrl}</baseUrl>
+            <apiBaseUrl>${apiBaseUrl}</apiBaseUrl>
+          </systemPropertyVariables>
 
           <testFailureIgnore>false</testFailureIgnore>
         </configuration>
